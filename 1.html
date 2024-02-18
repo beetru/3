@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  <head> 
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    <title>Новый уровень</title> 
+    <link 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+      rel="stylesheet" 
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+      crossorigin="anonymous" 
+    /> 
+    <style type="text/css">
+    .body{
+    background-image: url(duck.jpg);
+    background-size: cover;
+  }
+  .win {
+			background-image: url("win.png");
+			background-size: 100% 100%;
+			height: 400px;
+			width: 450px;
+			position: absolute;
+			top: 30%;
+			left: 37%;
+			display: none;
+		}
+</style>
+  </head> 
+  <body class="body"> 
+    <div class="win">
+      <button>переход</button>
+    </div>
+    <div class="container"> 
+      <p class="text-center fs-2 mt-5">Игра</p> 
+      <div class="buttons col-1 row mx-auto"> 
+        <button onclick="start()" class="btn btn-dark start">Начать</button> 
+        <div class="count-block"><span class="count"> 0 </span> из 10</div> 
+        <div class="container main"></div> 
+      </div> 
+    </div> 
+ 
+    <script>
+      let win = document.querySelector(".win") 
+      let startButton = document.querySelector(".start"); 
+      let main = document.querySelector(".main"); 
+      let count = document.querySelector(".count"); 
+      let countBlock = document.querySelector(".count-block"); 
+      let counter = 0; 
+      let timer; 
+      let interval; 
+      countBlock.style.display = "none"; 
+ 
+      function start() { 
+        startButton.style.display = "none"; 
+        countBlock.style.display = "block";  
+ 
+        timer = setTimeout(function () { 
+          alert("Время вышло!"); 
+          clearInterval(interval);   
+        }, 6000); 
+ 
+        let interval = setInterval(create, 450); 
+      } 
+ 
+      function create() { 
+         
+        if (counter >= 10) { 
+            clearInterval(interval);   
+            return; 
+        } 
+ 
+        let newBlock = document.createElement("div"); 
+        newBlock.style.backgroundImage = "url('1.png')"; 
+        newBlock.style.backgroundSize = "100% 100%"; 
+        newBlock.style.width = "100px"; 
+        newBlock.style.height = "100px"; 
+        newBlock.style.position = "absolute"; 
+        newBlock.style.left = getRandom() + "px"; 
+        newBlock.style.right = getRandom() + "px"; 
+        newBlock.style.top = getRandom() + "px"; 
+        newBlock.style.bottom = getRandom() + "px"; 
+        newBlock.className = "duck"; 
+        main.appendChild(newBlock); 
+ 
+        newBlock.onclick = function () { 
+          newBlock.style.display = "none"; 
+          counter = counter + 1; 
+          count.innerHTML = counter; 
+          if (counter == 10) {
+          win.style.display = "block"; 
+            alert("Вы выиграли!"); 
+            clearTimeout(timer);   
+            clearInterval(interval);  
+          } 
+        }; 
+ 
+      } 
+ 
+      function getRandom() { 
+        let num = Math.round(Math.random() * 500); 
+        return num; 
+      } 
+    </script> 
+  </body> 
+</html>
